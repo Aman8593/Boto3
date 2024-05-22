@@ -1,0 +1,26 @@
+# subnet & VPC
+import boto3
+
+# Create an EC2 resource
+ec2 = boto3.resource('ec2')
+
+# Create a new VPC
+vpc = ec2.create_vpc(CidrBlock='10.0.0.0/16')
+print(f"VPC ID: {'vpc-001fcb097f740f912'}")
+
+# Create a subnet in the new VPC
+subnet = vpc.create_subnet(CidrBlock='10.0.1.0/24')
+print(f"Subnet ID: {subnet.id}")
+
+
+# VPC only
+import boto3
+
+# Create an EC2 resource
+ec2 = boto3.resource('ec2')
+
+# Create a new VPC
+vpc = ec2.create_vpc(CidrBlock='10.0.0.0/16')
+
+# Print the VPC ID
+print(f"VPC ID: {vpc.id}")

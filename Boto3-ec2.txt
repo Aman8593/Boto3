@@ -1,0 +1,184 @@
+Boto3
+
+1. access key (aws configure)
+2. open in terminal 
+3. aws configure
+4. python name.py
+
+DynamoDB
+
+import boto3
+
+client = boto3.client('dynamodb')
+
+response = client.get_item(
+    TableName='student',
+    Key={
+        'roll no': {
+            'N': str(2) 
+        }
+    }
+    )
+
+print(response)
+
+
+_____________________________________________________________________________
+
+
+import boto3
+
+client = boto3.client('dynamodb')
+response = client.put_item(
+    Item={
+        'Roll No': {
+            'N': '9',
+        },
+        'Name':
+        {
+            'S':'Vinit'
+        },
+        'CGPA':
+        {
+          'N':  '5'
+        }
+        
+    },
+    ReturnConsumedCapacity='TOTAL',
+    TableName='test-dynamo'
+)
+
+print(response)
+
+___________________________________________________________________________________________
+
+import boto3
+
+client = boto3.client('dynamodb')
+table_name = 'Student'
+
+response = client.update_item(
+    TableName=table_name,
+    Key={
+        'RollNo': {
+            'N': str(235)
+        }
+    },
+    UpdateExpression='SET StudentName = :name',
+    ExpressionAttributeValues={':name': {'S': 'ABCD'}},
+    ReturnValues='ALL_NEW'
+)
+
+print("Updated Item:", response.get('Attributes', {}))
+
+___________________________________________________________________________________________
+
+import boto3
+
+client = boto3.client('dynamodb')
+
+
+#------------Get item----------------
+
+response = client.get_item(
+    TableName='MyTable', #enter your table Name
+    Key={
+        'rollNo': {
+            'N': str(2)  # 'N'  means number and pass on the roll no that u want to get,here therre is no need for type conversion. so instead u can use this : 'N': '2'
+            
+        }
+    }
+    )
+
+
+#---------------put item-------------
+response = client.put_item(
+    Item={
+
+        'rollNo':{'N':'6',}, # enter new roll no as Number type(N)
+
+        'AlbumTitle': {
+            'S': 'Somewhat Famous', #put item that u want  syntax: 'columnName':{'DataType':'value'}
+        },
+        'Artist': {
+            'S': 'No One You Know',
+        },
+        'SongTitle': {
+            'S': 'Call Me Today',
+        },
+    },
+    ReturnConsumedCapacity='TOTAL',
+    TableName='MyTable',
+)
+
+
+#-----------------query ------------------
+response = client.query(
+    ExpressionAttributeValues={
+        ':v1': {
+            'N': '1', #condition(rollNo =1)
+        },
+    },
+    KeyConditionExpression='rollNo = :v1',
+    ProjectionExpression='CGPA', #what u want to display in CLI
+    TableName='MyTable', #table Name
+)
+
+
+#----------------Update item----------------
+response = client.update_item(
+
+    ExpressionAttributeNames={
+        '#Name': 'Name', #column name
+        
+    },
+    ExpressionAttributeValues={
+        ':t': {
+            'S': 'xyz', #value to be updated
+        }
+    },
+    Key={
+        'rollNo': {
+            'N': '1', #condition (update the Name of the rollNo 1)
+        }
+    },
+    ReturnValues='ALL_NEW', 
+    TableName='MyTable',
+    UpdateExpression='SET #Name = :t', 
+)
+
+
+
+print(response)
+
+________________________________________________________________________________________
+
+import boto3
+
+client = boto3.client('dynamodb') 
+
+response = client.scan(TableName="Student")
+
+items = response.get('Items', [])
+
+for item in items:
+     print(item)
+
+_________________________________________________________________________________
+
+import boto3
+
+client = boto3.client('dynamodb')
+
+response = client.batch_get_item(
+    RequestItems={
+        'MyTable01': {
+            'Keys': [
+                {'rollno': {'N': '4'}},
+                {'rollno':{'N':'3'}}
+                            ],
+                    },
+    }
+)
+
+print(response)

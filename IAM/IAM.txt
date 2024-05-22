@@ -1,0 +1,13 @@
+import boto3
+
+# Create an IAM client
+iam = boto3.client('iam')
+
+# Create a new IAM user
+response = iam.create_user(
+    UserName='iam-02-05'
+)
+
+# Print the user's name and ARN
+print(f"User Name: {response['User']['UserName']}")
+print(f"User ARN: {response['User']['Arn']}")

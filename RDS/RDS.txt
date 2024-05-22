@@ -1,0 +1,47 @@
+import boto3
+
+client = boto3.client('rds')
+response = client.create_db_instance(
+    AllocatedStorage=400,
+    DBInstanceClass='db.r6gd.large',
+    DBInstanceIdentifier='mydbinstance',
+    Engine='MySQL',
+    MasterUserPassword='admin2931',
+    MasterUsername='admin',
+    Port=3307,
+)
+
+print(response)
+
+db.m5d.large (supports Amazon RDS Optimized Writes)
+2 vCPUs
+8 GiB RAM
+Network: 4,750 Mbps
+75 GB Instance St
+
+endpoint : database-1.cr4ekqgoofj1.ap-south-1.rds.amazonaws.com
+
+username : admin
+password : admin123
+
+sudo su- 
+
+yum -y install mariadb-server 
+systemctl enable mariadb
+systemctl start mariadb
+
+mysql -h database-1.cr4ekqgoofj1.ap-south-1.rds.amazonaws.com -P 3306 -u admin -p
+
+mysql -h mymysqlinstance.cr4ekqgoofj1.ap-south-1.rds.amazonaws.com -P 3306 -u admin -p
+
+
+import boto3
+
+# Connect to the RDS client
+rds_client = boto3.client('rds', region_name='ap-south-1')
+
+# Specify your RDS instance details
+db_instance_identifier = 'database-1'
+db_user = 	'
+db_password = 'admin123'
+db_host = 'database-1.cr4ekqgoofj1.ap-south-1.rds.amazonaws.com'

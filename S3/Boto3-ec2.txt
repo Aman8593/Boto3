@@ -1,0 +1,6 @@
+Boto3
+
+1. access key (aws configure)
+2. open in terminal 
+3. aws configure
+4. python name.py

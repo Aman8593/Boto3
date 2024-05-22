@@ -1,0 +1,90 @@
+# get item
+import boto3
+
+client = boto3.client('dynamodb')
+
+response = client.get_item(
+    TableName='student',
+    Key={
+        'roll no': {
+            'N': str(2) 
+        }
+    }
+    )
+
+print(response)
+
+# put item
+import boto3
+
+client = boto3.client('dynamodb')
+response = client.put_item(
+    Item={
+        'Roll No': {
+            'N': '9',
+        },
+        'Name':
+        {
+            'S':'Vinit'
+        },
+        'CGPA':
+        {
+          'N':  '5'
+        }
+        
+    },
+    ReturnConsumedCapacity='TOTAL',
+    TableName='test-dynamo'
+)
+
+print(response)
+
+# update
+import boto3
+
+client = boto3.client('dynamodb')
+table_name = 'Student'
+
+response = client.update_item(
+    TableName=table_name,
+    Key={
+        'RollNo': {
+            'N': str(235)
+        }
+    },
+    UpdateExpression='SET StudentName = :name',
+    ExpressionAttributeValues={':name': {'S': 'ABCD'}},
+    ReturnValues='ALL_NEW'
+)
+
+print("Updated Item:", response.get('Attributes', {}))
+
+# scan
+import boto3
+
+client = boto3.client('dynamodb') 
+
+response = client.scan(TableName="Student")
+
+items = response.get('Items', [])
+
+for item in items:
+     print(item)
+
+# batch get item
+import boto3
+
+client = boto3.client('dynamodb')
+
+response = client.batch_get_item(
+    RequestItems={
+        'MyTable01': {
+            'Keys': [
+                {'rollno': {'N': '4'}},
+                {'rollno':{'N':'3'}}
+                            ],
+                    },
+    }
+)
+
+print(response)
